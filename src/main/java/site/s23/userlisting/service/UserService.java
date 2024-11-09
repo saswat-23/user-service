@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import site.s23.userlisting.dto.UserDTO;
+import site.s23.userlisting.dto.UserReqDTO;
+import site.s23.userlisting.dto.UserRespDTO;
 import site.s23.userlisting.model.User;
 import site.s23.userlisting.repo.UserRepo;
 import site.s23.userlisting.utility.UserUtility;
@@ -19,7 +21,7 @@ public class UserService {
 
 	public UserDTO getUserById(int userId) {
 		
-		UserDTO userDTO = UserUtility.getUserDTOFromUserEntity(userRepo.findById(userId).get(),new UserDTO());
+		UserDTO userDTO = UserUtility.getUserDTOFromUserEntity(userRepo.findById(userId).get(),new UserRespDTO());
 		
 		return userDTO;
 	}
@@ -28,18 +30,18 @@ public class UserService {
 		
 		List<User> users = userRepo.findAll();
 		
-		return users.stream().map(user -> UserUtility.getUserDTOFromUserEntity(user,new UserDTO())).collect(Collectors.toList());
+		return users.stream().map(user -> UserUtility.getUserDTOFromUserEntity(user,new UserRespDTO())).collect(Collectors.toList());
 		
 	}
 	
-	public UserDTO addNewUser(UserDTO userDTO){
+	public UserRespDTO addNewUser(UserReqDTO userDTO){
 		
 		User user = userRepo.save(UserUtility.getUserEntityFromUserDTO(userDTO, new User()));
-		return UserUtility.getUserDTOFromUserEntity(user, new UserDTO());
+		return UserUtility.getUserDTOFromUserEntity(user, new UserRespDTO());
 	}
 	
 	
-	public UserDTO updateUser(UserDTO userDTO){
+	public UserRespDTO updateUser(UserReqDTO userDTO){
 		
 		if(getUserById(userDTO.getUserId()) != null) {
 			System.out.println("No user found with userId = "+userDTO.getUserId());
@@ -47,7 +49,7 @@ public class UserService {
 		
 		
 		User user = userRepo.save(UserUtility.getUserEntityFromUserDTO(userDTO, new User()));
-		return UserUtility.getUserDTOFromUserEntity(user, new UserDTO());
+		return UserUtility.getUserDTOFromUserEntity(user, new UserRespDTO());
 	}
 	
 }

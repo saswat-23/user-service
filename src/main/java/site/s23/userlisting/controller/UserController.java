@@ -1,6 +1,7 @@
 package site.s23.userlisting.controller;
 
 import java.util.List;
+
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import site.s23.userlisting.dto.UserDTO;
+import site.s23.userlisting.dto.UserReqDTO;
+import site.s23.userlisting.dto.UserRespDTO;
 import site.s23.userlisting.service.UserService;
 
 @RestController
@@ -37,14 +40,14 @@ public class UserController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
-		UserDTO user = userService.addNewUser(userDTO);
+	public ResponseEntity<UserRespDTO> addUser(@RequestBody UserReqDTO userDTO) {
+		UserRespDTO user = userService.addNewUser(userDTO);
 		return new ResponseEntity<>(user, HttpStatusCode.valueOf(HttpStatus.SC_CREATED));
 	}
 	
 	@PutMapping("/update")
-	public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
-		UserDTO user = userService.addNewUser(userDTO);
+	public ResponseEntity<UserRespDTO> updateUser(@RequestBody UserReqDTO userDTO) {
+		UserRespDTO user = userService.addNewUser(userDTO);
 		return new ResponseEntity<>(user, HttpStatusCode.valueOf(HttpStatus.SC_ACCEPTED));
 	}
 }
